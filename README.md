@@ -17,7 +17,19 @@
 Most people interact with AI reactively: you prompt, it responds, the conversation ends. ForgeAI is different. It operates in a **Perceive → Think → Act → Observe** loop, making it capable of handling complex, multi-step workflows without human intervention at each step.
 
 Think of it this way:
-> *ChatGPT gives you the plan. ForgeAI executes it.*
+> *Ai gives you the plan. ForgeAI executes it.*
+
+---
+
+## 🚨 Problem Statement
+
+Every day, thousands of entrepreneurs, indie hackers, and early-stage founders face the same silent blocker: **they have a business idea but no name for it.**
+
+Choosing a startup name is deceptively hard. It needs to be memorable, brandable, available as a domain, not trademarked, culturally neutral, and reflective of the product's identity — all at once. Founders spend days or even weeks manually brainstorming, cross-checking domain registrars, scanning trademark databases, and iterating on feedback — time that should be spent building.
+
+Existing tools either generate random word combinations with no strategic reasoning, or they require expensive branding agencies. There is no intelligent, autonomous system that understands the *context* of a startup — its domain, target audience, tone, and values — and generates a curated shortlist of names with availability checks and justification.
+
+**ForgeAI solves this by acting as an autonomous naming agent**: given a startup's description and constraints, it reasons across multiple dimensions, uses real-world tools (domain lookup, trademark check, linguistic analysis), and iterates until it delivers a validated, ready-to-use startup name — without a human in the loop.
 
 ---
 
@@ -73,7 +85,11 @@ This is where intelligence lives. It implements the **ReAct loop**:
 - Feeds the observation back into context and repeats
 - Exits when the agent signals task completion or max iterations is hit
 
-### The ReAct Pattern — How ForgeAI Thinks
+---
+
+## 🧩 Task Decomposition
+
+When ForgeAI receives a high-level goal (e.g., *"Generate a startup name for a B2B SaaS in the HR space"*), it doesn't treat it as a single prompt. Instead, it autonomously breaks the goal into sub-tasks and executes them in sequence using the **ReAct Pattern**:
 
 ```
 User Goal
@@ -94,56 +110,18 @@ User Goal
 [FINAL ANSWER] → Returned to user
 ```
 
-This loop is what separates ForgeAI from a standard LLM call. The agent is grounded in real tool outputs at every step.
+For a startup name generation task, this decomposition might look like:
 
----
+| Step | Sub-Task | Tool Used |
+|------|----------|-----------|
+| 1 | Understand the startup's domain, audience, and tone | LLM Reasoning |
+| 2 | Generate a pool of candidate names | LLM Generation |
+| 3 | Check domain availability for each candidate | Domain Lookup Tool |
+| 4 | Filter against known trademarks | Trademark API Tool |
+| 5 | Score candidates on memorability and brandability | LLM Evaluation |
+| 6 | Return a ranked shortlist with justification | Final Answer |
 
-## ⚙️ Setup & Installation
-
-### Prerequisites
-- Python 3.10 or higher
-- PowerShell (Windows) or Terminal (Mac/Linux)
-- Google Chrome browser
-- API key for your chosen LLM provider
-
-### Step 1 — Clone the Repository
-```powershell
-git clone https://github.com/yourusername/forgeai.git
-cd forgeai
-```
-
-### Step 2 — Create and Activate Virtual Environment
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate     # Windows PowerShell
-# source venv/bin/activate  # Mac/Linux
-```
-
-### Step 3 — Install Dependencies
-```powershell
-pip install -r requirements.txt
-```
-
-### Step 4 — Configure Environment Variables
-Create a `.env` file in the root directory:
-```env
-LLM_API_KEY=your_api_key_here
-LLM_MODEL=gpt-4o          # or claude-3-5-sonnet, etc.
-MAX_ITERATIONS=10
-PORT=5000
-```
-
-### Step 5 — Run ForgeAI
-```powershell
-python app.py
-```
-
-### Step 6 — Open in Chrome
-```
-http://localhost:5000
-```
-
-Enter your goal in the interface and watch ⚡ ForgeAI work autonomously.
+This loop is what separates ForgeAI from a standard LLM call. The agent is **grounded in real tool outputs** at every step, rather than hallucinating results from training data alone.
 
 ---
 
@@ -161,6 +139,57 @@ Enter your goal in the interface and watch ⚡ ForgeAI work autonomously.
 | Full execution auditability | ❌ | ✅ |
 
 Off-the-shelf LLM interfaces are **reactive** — they respond to a single prompt. ForgeAI is **proactive** — it takes a goal and figures out everything needed to complete it.
+
+---
+
+## 🛠️ Implementation
+
+### ⚙️ Setup & Installation
+
+#### Prerequisites
+- Python 3.10 or higher
+- PowerShell (Windows) or Terminal (Mac/Linux)
+- Google Chrome browser
+- API key for your chosen LLM provider
+
+#### Step 1 — Clone the Repository
+```powershell
+git clone https://github.com/yourusername/forgeai.git
+cd forgeai
+```
+
+#### Step 2 — Create and Activate Virtual Environment
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate     # Windows PowerShell
+# source venv/bin/activate  # Mac/Linux
+```
+
+#### Step 3 — Install Dependencies
+```powershell
+pip install -r requirements.txt
+```
+
+#### Step 4 — Configure Environment Variables
+Create a `.env` file in the root directory:
+```env
+LLM_API_KEY=your_api_key_here
+LLM_MODEL=gpt-4o          # or claude-3-5-sonnet, etc.
+MAX_ITERATIONS=10
+PORT=5000
+```
+
+#### Step 5 — Run ForgeAI
+```powershell
+python app.py
+```
+
+#### Step 6 — Open in Chrome
+```
+http://localhost:5000
+```
+
+Enter your goal in the interface and watch ⚡ ForgeAI work autonomously.
 
 ---
 
